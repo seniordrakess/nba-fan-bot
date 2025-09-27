@@ -1,1 +1,24 @@
+name: Update NBA Games
+
+on:
+  schedule:
+    - cron: "0 0 * * *" # every day at midnight UTC
+  workflow_dispatch:
+
+jobs:
+  update-readme:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: 3.11
+      - run: pip install requests
+      - run: python update_readme.py
+      - uses: EndBug/add-and-commit@v9
+        with:
+          author_name: "github-actions"
+          author_email: "actions@github.com"
+          message: "Update NBA upcoming games"
 
